@@ -6,7 +6,10 @@
     The CLI is published as a dotnet tool; Opacc.Client.Tests sets IsPackable=false.
   -->
   <PropertyGroup>
-    <Version>0.0.2-alpha</Version>
+    <!-- Base version. CI on push to main appends a build counter (-> 0.0.2-alpha.NN);
+         a vX.Y.Z tag overrides this with the exact stable version. -->
+    <VersionPrefix>0.0.2</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
     <Authors>Roman Schweri, Luca Schäfer</Authors>
     <Company>Beat Bucher AG</Company>
     <Copyright>Copyright © Beat Bucher AG</Copyright>

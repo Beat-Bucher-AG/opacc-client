@@ -1,14 +1,20 @@
 name: Publish to NuGet
 
-# Tagging a commit as v1.2.3 publishes all packages at version 1.2.3.
+# Ways to publish:
+#   - Push to main            -> prerelease  <VersionPrefix>-alpha.<run_number>  (e.g. 0.0.2-alpha.42)
+#   - Push a tag vX.Y.Z       -> stable      X.Y.Z                               (e.g. 1.2.3)
+#   - Manual (workflow_dispatch) with an explicit version
+# To push to main WITHOUT publishing, put [skip ci] in the commit message.
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to publish (e.g. 1.2.3)'
+        description: 'Exact version to publish (e.g. 1.2.3 or 1.2.3-beta)'
         required: true
 
 permissions:
@@ -25,18 +31,24 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      # Decide the version arguments passed to `dotnet pack`.
       - name: Resolve version
         id: version
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            # Tag push -> stable release, version taken from the tag (strip leading "v")
+            echo "args=-p:Version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual run -> exact version from the input
+            echo "args=-p:Version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
           else
-            echo "value=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+            # Push to main -> prerelease, append the run number to the base VersionSuffix
+            echo "args=-p:VersionSuffix=alpha.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Pack
-        run: dotnet pack -c Release -o ./nupkg -p:Version=${{ steps.version.outputs.value }}
+        run: dotnet pack -c Release -o ./nupkg ${{ steps.version.outputs.args }}
 
       # Exchanges the GitHub OIDC token for a short-lived NuGet API key.
       # NUGET_USER is a repository secret holding your nuget.org username.
