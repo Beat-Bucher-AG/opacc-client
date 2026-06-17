@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <PackageId>Opacc.Client</PackageId>
+    <Description>A typed .NET client for the Opacc ERP WebService (OXAS): strongly-typed Business Object access, DI integration and a bundled Roslyn analyzer.</Description>
+    <PackageTags>opacc;erp;oxas;wcf;client</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Opacc.Client.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Analyzer project reference:
+      - OutputItemType="Analyzer"  → runs the analyzer when building Opacc.Client itself
+      - ReferenceOutputAssembly="false" → DLL is NOT linked as a runtime dependency
+      NOTE: analyzers do NOT propagate through ProjectReference to consumers.
+            For NuGet consumers the DLL is packed into analyzers/dotnet/cs/ (see None item below).
+            For project-reference consumers add the same ProjectReference to their .csproj.
+    -->
+    <ProjectReference Include="..\Opacc.Client.Analyzers\Opacc.Client.Analyzers.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false"
+                      PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Pack the analyzer DLL into the NuGet package so consumers get it automatically -->
+    <None Include="..\Opacc.Client.Analyzers\bin\$(Configuration)\net8.0\Opacc.Client.Analyzers.dll"
+          Pack="true"
+          PackagePath="analyzers/dotnet/cs"
+          Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.3" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.*" />
+  </ItemGroup>
+
+</Project>

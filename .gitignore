@@ -1,0 +1,15 @@
+#IDE
+.idea/
+.vs/
+
+# Build
+obj/
+bin/
+# NuGet output
+nupkg/
+*.nupkg
+*.snupkg
+
+# Test results
+**/TestResults/
+*.trx

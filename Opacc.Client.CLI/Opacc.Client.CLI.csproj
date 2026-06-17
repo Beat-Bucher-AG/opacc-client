@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>opacc</AssemblyName>
+    <RootNamespace>Opacc.Client.CLI</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>opacc</ToolCommandName>
+    <PackageId>Opacc.Client.CLI</PackageId>
+    <Description>Command-line tool (opacc) for Opacc.Client: scaffolds typed C# Business Object model classes from a live Opacc instance.</Description>
+    <PackageTags>opacc;erp;cli;dotnet-tool;scaffolding</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Opacc.Client\Opacc.Client.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Opacc.Client.Sentry</RootNamespace>
+
+    <PackageId>Opacc.Client.Sentry</PackageId>
+    <Description>Sentry performance tracing for Opacc.Client: adds a child span for every Opacc operation inside your Sentry transactions.</Description>
+    <PackageTags>opacc;erp;sentry;tracing;observability</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Opacc.Client\Opacc.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Sentry" Version="5.*" />
+  </ItemGroup>
+
+</Project>
