@@ -22,6 +22,13 @@ public interface IOpaccGetBo<T>
     /// </summary>
     IOpaccGetBo<T> Start(T model);
 
+    /// <summary>
+    /// Composes the start key from explicit segment values, in index-segment order, comma-joined.
+    /// Use for multi-segment indices when the key cannot be derived from a single value or model.
+    /// Example: <c>.Start(salDocInternalNo, salDocItemNo, poolNo)</c>.
+    /// </summary>
+    IOpaccGetBo<T> Start(params object[] segments);
+
     /// <summary>Suchmodus (Default: Equal)</summary>
     IOpaccGetBo<T> SearchOperator(SearchOperator op);
 

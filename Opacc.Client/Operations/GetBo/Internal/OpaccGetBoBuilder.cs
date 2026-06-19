@@ -67,6 +67,12 @@ internal class OpaccGetBoBuilder<T> : IOpaccGetBo<T>
         return this;
     }
 
+    public IOpaccGetBo<T> Start(params object[] segments)
+    {
+        _start = string.Join(",", segments.Select(KeyExtractor.FormatSegment));
+        return this;
+    }
+
     public IOpaccGetBo<T> SearchOperator(SearchOperator op)
     {
         _searchOp = op;

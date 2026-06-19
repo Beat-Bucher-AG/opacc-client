@@ -86,6 +86,16 @@ public class DeleteBoBuilderTests
         _captured!.StartKeys.Should().Be("10,5");
     }
 
+    [Fact]
+    public async Task DeleteBo_StartParams_ComposesMultiSegmentKey()
+    {
+        Setup();
+        await _client.DeleteBoAsync<FakeSalDocItem>()
+            .Start(10, 5)
+            .ExecuteAsync();
+        _captured!.StartKeys.Should().Be("10,5");
+    }
+
     // ================================================================
     // SearchOperator
     // ================================================================

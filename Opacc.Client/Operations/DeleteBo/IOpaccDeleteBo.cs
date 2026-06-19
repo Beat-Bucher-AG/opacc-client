@@ -15,6 +15,13 @@ public interface IOpaccDeleteBo<T>
     /// </summary>
     IOpaccDeleteBo<T> Start(T model);
 
+    /// <summary>
+    /// Composes the start key from explicit segment values, in index-segment order, comma-joined.
+    /// Use for multi-segment indices when the key cannot be derived from a single value or model.
+    /// Example: <c>.Start(salDocInternalNo, salDocItemNo, poolNo)</c>.
+    /// </summary>
+    IOpaccDeleteBo<T> Start(params object[] segments);
+
     /// <summary>Search operator (default: Equal).</summary>
     IOpaccDeleteBo<T> SearchOperator(SearchOperator op);
 

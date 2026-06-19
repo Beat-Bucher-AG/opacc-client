@@ -88,6 +88,16 @@ public class GetBoBuilderTests
         _captured.Segment.Should().Be(2);
     }
 
+    [Fact]
+    public async Task GetBo_StartParams_ComposesMultiSegmentKey()
+    {
+        Setup();
+        await _client.GetBoAsync<FakeSalDocItem>()
+            .Start(10, 5)
+            .FirstAsync();
+        _captured!.Start.Should().Be("10,5");
+    }
+
     // ================================================================
     // SearchOperator
     // ================================================================

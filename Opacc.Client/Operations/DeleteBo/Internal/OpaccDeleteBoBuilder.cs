@@ -44,6 +44,12 @@ internal class OpaccDeleteBoBuilder<T> : IOpaccDeleteBo<T>
         return this;
     }
 
+    public IOpaccDeleteBo<T> Start(params object[] segments)
+    {
+        _start = string.Join(",", segments.Select(KeyExtractor.FormatSegment));
+        return this;
+    }
+
     public IOpaccDeleteBo<T> SearchOperator(SearchOperator op)
     {
         _searchOp = op;
