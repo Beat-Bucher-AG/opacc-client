@@ -22,7 +22,7 @@ internal static class TypeMapper
             "D"  => new("DateTime", OpaccDataType.Date, true),
             "B"  => new("bool", null, true),
             "N"  => MapNumeric(format),
-            "T"  => new("DateTime", null, true),
+            "T"  => new("string", null, true),
             _    => new("string", null, false),   // Fallback
         };
     }
